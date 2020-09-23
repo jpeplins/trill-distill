@@ -18,7 +18,7 @@ except:
 SAMPLING_RATE = 16000
 WIN_SIZE_SEC = 0.96
 CONTEXT_SIZE_SAMPLES = int(WIN_SIZE_SEC*SAMPLING_RATE)
-EXAMPLES_PER_SHARD = 200  # 68kb per example -> 140mb per shard
+EXAMPLES_PER_SHARD = 2000  # 68kb per example -> 140mb per shard
 
 FLAGS = flags.FLAGS
 
