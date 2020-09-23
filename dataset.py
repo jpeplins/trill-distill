@@ -65,6 +65,8 @@ def main(unused_argv):
         shard_path = os.path.join(FLAGS.output_dir, shard_fn)
         start_idx = shard * EXAMPLES_PER_SHARD
 
+        logging.info("Processing %3.3f-percent complete." % (100 * (start_idx / num_files)))
+
         with tf.io.TFRecordWriter(shard_path) as out:
             for idx in range(start_idx, start_idx+EXAMPLES_PER_SHARD):
 
@@ -74,7 +76,7 @@ def main(unused_argv):
 
                     if len(x) < CONTEXT_SIZE_SAMPLES:
                         continue
-                    start_idx = np.random.random_integers(0, len(x)-CONTEXT_SIZE_SAMPLES)
+                    start_idx = np.random.randint(0, len(x)-CONTEXT_SIZE_SAMPLES)
                     x_samp = x[start_idx:start_idx+CONTEXT_SIZE_SAMPLES]
 
                     # spectrogram input
@@ -86,10 +88,9 @@ def main(unused_argv):
                     example = to_tfrecord(lms.flatten().tolist(), target.flatten().tolist())
                     out.write(example.SerializeToString())
 
-                    logging.info("Processing %3.3f-percent complete." % (100 * (idx/num_files)))
-
                 except Exception as e:
                     print(traceback.format_exc())
+
 
 
 if __name__ == '__main__':
