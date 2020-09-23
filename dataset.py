@@ -7,6 +7,14 @@ import numpy as np
 import traceback
 import os
 
+physical_devices = tf.config.list_physical_devices('GPU')
+try:
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+    tf.config.experimental.set_memory_growth(physical_devices[1], True)
+    tf.config.experimental.set_memory_growth(physical_devices[2], True)
+except:
+    pass
+
 SAMPLING_RATE = 16000
 WIN_SIZE_SEC = 0.96
 CONTEXT_SIZE_SAMPLES = int(WIN_SIZE_SEC*SAMPLING_RATE)
