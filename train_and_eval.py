@@ -3,6 +3,8 @@ from input_manager import get_dataset
 from tensorflow import keras
 from models import mobilenetv3_96x64_1s
 import tensorflow as tf
+import numpy as np
+import os
 
 physical_devices = tf.config.list_physical_devices('GPU')
 try:
@@ -16,7 +18,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string('dataset_path', None, 'Path to collection of TFRecords.')
 flags.DEFINE_string('output_path', None, 'Store model checkpoints and stuff.')
 flags.DEFINE_float('learning_rate', 0.01, 'You know what this does.')
-flags.DEFINE_integer('num_epochs', 100, 'You know what this does.')
+flags.DEFINE_integer('num_epochs', 50, 'You know what this does.')
 flags.DEFINE_integer('batch_size', 64, 'You know what this does.')
 
 
@@ -45,8 +47,10 @@ def main(unused_argvs):
         train_ds,
         epochs=FLAGS.num_epochs,
         batch_size=FLAGS.batch_size,
-        callbacks=[]
+        callbacks=[model_checkpoint_callback]
     )
+
+    np.savetxt(os.path.join(FLAGS.output_path, "loss.txt"), np.array(history.history['loss']), delimiter=",")
 
 
 if __name__ == '__main__':
