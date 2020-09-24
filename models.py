@@ -14,7 +14,6 @@ def mobilenetv3_96x64_1s(alpha=1.0, embedding_size=12288):
         weights=None,
         classifier_activation=tf.nn.swish,
         classes=embedding_size,
-        dropout_rate=0.0
     )(net)
     return tf.keras.models.Model(inputs=[model_in], outputs=[net], name='model_v0')
 
