@@ -5,6 +5,7 @@ AUTOTUNE = tf.data.experimental.AUTOTUNE
 SPEC_HEIGHT = 64
 SPEC_WIDTH = 96
 TARGET_SIZE = 12288
+NUM_EXAMPLES = 902523
 
 
 def _parse_batch(record_batch):
@@ -24,7 +25,7 @@ def reshape_tensor(tensor):
     return tf.reshape(tensor, (64, 96, 1))
 
 
-def get_dataset(data_dir, batch_size=32, n_epochs=10):
+def get_dataset(data_dir, batch_size=32, train_percent=0.8):
 
     files_ds = tf.data.Dataset.list_files(os.path.join(data_dir, '*.tfrecord'))
 
@@ -41,15 +42,17 @@ def get_dataset(data_dir, batch_size=32, n_epochs=10):
     # Parse a batch into a dataset of [audio, label] pairs
     ds = ds.map(lambda x: _parse_batch(x))
 
-    # Repeat the training data for n_epochs.
-    # ds = ds.repeat(n_epochs)
+    # train/test split
+    test_size = int(NUM_EXAMPLES * (1 - train_percent))
+    ds_test = ds.take(test_size)
+    ds_train = ds.skip(test_size)
 
     # Shuffle batches each epoch.
-    ds = ds.shuffle(int(1e3), reshuffle_each_iteration=True)
+    ds_train = ds_train.shuffle(int(1e3), reshuffle_each_iteration=True)
+    ds_train = ds_train.batch(batch_size)
+    ds_test = ds_test.batch(test_size)
 
-    ds = ds.batch(batch_size)
-
-    return ds.prefetch(buffer_size=AUTOTUNE)
+    return ds_train.prefetch(buffer_size=AUTOTUNE), ds_test.prefetch(buffer_size=AUTOTUNE)
 
 
 if __name__ == '__main__':

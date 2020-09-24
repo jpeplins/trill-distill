@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Reshape, Input
 
 
-def mobilenetv3_96x64_1s(alpha=1.0, embedding_size=12288):
+def mobilenetv2_96x64_1s(alpha=1.0, embedding_size=12288):
     """ Vanilla MobileNet"""
 
     model_in = Input(shape=(64, 96))
@@ -23,4 +23,4 @@ def fred_v0_96x64_1s():
 
 
 if __name__ == "__main__":
-    mobilenetv3_96x64_1s()
+    mobilenetv2_96x64_1s()
