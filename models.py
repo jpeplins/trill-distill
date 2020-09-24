@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras.layers import Reshape, Input, SeparableConv2D, Conv2D, Dense
+from tensorflow.keras.layers import Reshape, Input, Conv2D, Dense, Dropout, Flatten, BatchNormalization, AveragePooling2D
 from mobilenetv3_block import BottleNeck, h_swish
 
 
@@ -29,8 +29,8 @@ def keras_mobilenetv3_small(num_classes=12288):
     net = tf.keras.Sequential([
         Input(shape=(64, 96)),
         Reshape((64, 96, 1)),
-        tf.keras.layers.Conv2D(filters=16, kernel_size=(3, 3), strides=1, padding="same"),
-        tf.keras.layers.BatchNormalization(),
+        Conv2D(filters=16, kernel_size=(3, 3), strides=1, padding="same"),
+        BatchNormalization(),
         BottleNeck(in_size=16, exp_size=16, out_size=16, s=2, is_se_existing=True, NL="RE", k=3),
         BottleNeck(in_size=16, exp_size=72, out_size=24, s=2, is_se_existing=False, NL="RE", k=3),
         BottleNeck(in_size=24, exp_size=88, out_size=24, s=1, is_se_existing=False, NL="RE", k=3),
@@ -42,15 +42,41 @@ def keras_mobilenetv3_small(num_classes=12288):
         BottleNeck(in_size=48, exp_size=288, out_size=96, s=2, is_se_existing=True, NL="HS", k=5),
         BottleNeck(in_size=96, exp_size=576, out_size=96, s=1, is_se_existing=True, NL="HS", k=5),
         BottleNeck(in_size=96, exp_size=576, out_size=96, s=1, is_se_existing=True, NL="HS", k=5),
-        tf.keras.layers.Conv2D(filters=576, kernel_size=(1, 1), strides=1, padding="same"),
-        tf.keras.layers.BatchNormalization(),
-        tf.keras.layers.AveragePooling2D(pool_size=(4, 6), strides=1),
-        tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(num_classes, activation=tf.nn.swish)
+        Conv2D(filters=576, kernel_size=(1, 1), strides=1, padding="same"),
+        BatchNormalization(),
+        AveragePooling2D(pool_size=(4, 6), strides=1),
+        Flatten(),
+        Dense(num_classes, activation=tf.nn.swish)
+    ])
+    return net
+
+
+def keras_mobilenetv3_tiny(num_classes=12288, dropout=0.1):
+    net = tf.keras.Sequential([
+        Input(shape=(64, 96)),
+        Reshape((64, 96, 1)),
+        Conv2D(filters=16, kernel_size=(3, 3), strides=1, padding="same"),
+        Dropout(dropout),
+        BatchNormalization(),
+        BottleNeck(in_size=16, exp_size=16, out_size=16, s=2, is_se_existing=True, NL="RE", k=3),
+        BottleNeck(in_size=16, exp_size=72, out_size=24, s=2, is_se_existing=False, NL="RE", k=3),
+        BottleNeck(in_size=24, exp_size=88, out_size=24, s=1, is_se_existing=False, NL="RE", k=3),
+        BottleNeck(in_size=24, exp_size=96, out_size=40, s=2, is_se_existing=True, NL="HS", k=5),
+        BottleNeck(in_size=40, exp_size=240, out_size=40, s=1, is_se_existing=True, NL="HS", k=5),
+        BottleNeck(in_size=40, exp_size=240, out_size=40, s=1, is_se_existing=True, NL="HS", k=5),
+        BottleNeck(in_size=40, exp_size=120, out_size=48, s=1, is_se_existing=True, NL="HS", k=5),
+        BottleNeck(in_size=48, exp_size=144, out_size=48, s=1, is_se_existing=True, NL="HS", k=5),
+        BottleNeck(in_size=48, exp_size=288, out_size=96, s=2, is_se_existing=True, NL="HS", k=5),
+        Conv2D(filters=288, kernel_size=(1, 1), strides=1, padding="same"),
+        Dropout(dropout),
+        BatchNormalization(),
+        AveragePooling2D(pool_size=(4, 6), strides=1),
+        Flatten(),
+        Dense(num_classes, activation=tf.nn.swish)
     ])
     return net
 
 
 if __name__ == "__main__":
-    model = keras_mobilenetv3_small()
+    model = keras_mobilenetv3_tiny()
     model.summary()

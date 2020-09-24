@@ -1,7 +1,7 @@
 from absl import flags, logging, app
 from input_manager import get_dataset
 from tensorflow import keras
-from models import mobilenetv2_96x64_1s, keras_mobilenetv3_small
+from models import mobilenetv2_96x64_1s, keras_mobilenetv3_tiny
 import tensorflow as tf
 import numpy as np
 import os
@@ -28,7 +28,7 @@ def main(unused_argvs):
 
     train_ds, test_ds = get_dataset(FLAGS.dataset_path, batch_size=FLAGS.batch_size)
 
-    model = keras_mobilenetv3_small()
+    model = keras_mobilenetv3_tiny()
 
     model.compile(
         optimizer=keras.optimizers.Adam(learning_rate=FLAGS.learning_rate),
