@@ -17,7 +17,7 @@ flags.DEFINE_string('dataset_path', None, 'Path to collection of TFRecords.')
 flags.DEFINE_string('output_path', None, 'Store model checkpoints and stuff.')
 flags.DEFINE_float('learning_rate', 0.01, 'You know what this does.')
 flags.DEFINE_integer('num_epochs', 100, 'You know what this does.')
-flags.DEFINE_integer('batch_size', 32, 'You know what this does.')
+flags.DEFINE_integer('batch_size', 64, 'You know what this does.')
 
 
 def main(unused_argvs):

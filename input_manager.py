@@ -45,7 +45,7 @@ def get_dataset(data_dir, batch_size=32, n_epochs=10):
     # ds = ds.repeat(n_epochs)
 
     # Shuffle batches each epoch.
-    ds = ds.shuffle(int(5e4), reshuffle_each_iteration=True)
+    ds = ds.shuffle(int(1e3), reshuffle_each_iteration=True)
 
     ds = ds.batch(batch_size)
 
