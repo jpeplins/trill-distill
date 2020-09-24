@@ -25,7 +25,7 @@ def reshape_tensor(tensor):
     return tf.reshape(tensor, (64, 96, 1))
 
 
-def get_dataset(data_dir, batch_size=32, train_percent=0.8):
+def get_dataset(data_dir, batch_size=32, train_percent=0.9):
 
     files_ds = tf.data.Dataset.list_files(os.path.join(data_dir, '*.tfrecord'))
 
@@ -50,7 +50,7 @@ def get_dataset(data_dir, batch_size=32, train_percent=0.8):
     # Shuffle batches each epoch.
     ds_train = ds_train.shuffle(int(1e3), reshuffle_each_iteration=True)
     ds_train = ds_train.batch(batch_size)
-    ds_test = ds_test.batch(test_size)
+    ds_test = ds_test.batch(batch_size)
 
     return ds_train.prefetch(buffer_size=AUTOTUNE), ds_test.prefetch(buffer_size=AUTOTUNE)
 
