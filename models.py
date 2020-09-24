@@ -7,7 +7,7 @@ def mobilenetv3_96x64_1s(alpha=1.0, embedding_size=12288):
 
     model_in = Input(shape=(64, 96))
     net = Reshape((64, 96, 1))(model_in)
-    net = tf.keras.applications.MobileNetV3Small(
+    net = tf.keras.applications.MobileNetV2(
         input_shape=(64, 96, 1),
         alpha=alpha,
         include_top=True,
