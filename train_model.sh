@@ -11,7 +11,6 @@ BATCH_SIZE=64
 NUM_EPOCHS=100
 EMBEDDING_SIZE=2048
 LEARNING_RATE=0.1
-TENSORBOARD_PORT=6006
 
 # INPUTS
 DATASET_PATH="/data2/audioset-speech/tfrecords"
@@ -21,8 +20,6 @@ MODEL_NAME="mnetv3_small_${EMBEDDING_SIZE}_v0"
 LOGDIR="/data2/audioset-speech/tensorboard/"
 OUTPUT_PATH="/data2/audioset-speech/models"
 CHECKPOINT_PATH="/data2/audioset-speech/checkpoints"
-
-tensorboard --logdir "${LOGDIR}" --port "${TENSORBOARD_PORT}"
 
 python -m train_and_eval \
 -model_name "${MODEL_NAME}" \
