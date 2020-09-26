@@ -82,6 +82,11 @@ def main(_):
         os.path.join(FLAGS.output_path, FLAGS.model_name)
     )
 
+    converter = tf.lite.TFLiteConverter.from_saved_model(
+        os.path.join(FLAGS.output_path, FLAGS.model_name))
+    with open(os.path.join(FLAGS.output_path, FLAGS.model_name, '%s.tflite' % FLAGS.model_name), 'wb') as f:
+        f.write(converter.convert())
+
 
 if __name__ == '__main__':
     app.run(main)
