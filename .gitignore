@@ -1,7 +1,9 @@
 venv/
 .idea/
+logs/
 test_data/
 test_output/
+checkpoints/
+trained_models/
 __pycache__/
-
 .DS_Store
