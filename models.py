@@ -9,7 +9,7 @@ def distilled_model(embedding_size=2048, dropout=0.1):
     embedding_model = keras_mobilenetv3_small(num_classes=embedding_size, dropout=dropout)
     distillation_model = tf.keras.Sequential([
         embedding_model,
-        Dense(12288, activation=tf.nn.swish, kernel_regularizer=regularizers.l2(1e-6), name="layer19_hat")
+        Dense(12288, activation=tf.nn.softmax, kernel_regularizer=regularizers.l2(1e-9), name="layer19_hat")
     ])
     return embedding_model, distillation_model
 

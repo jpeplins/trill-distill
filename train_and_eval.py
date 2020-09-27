@@ -43,7 +43,7 @@ def main(_):
 
     distillation_model.compile(
         optimizer=keras.optimizers.Adam(learning_rate=FLAGS.learning_rate),
-        loss=keras.losses.MeanSquaredError(),
+        loss=keras.losses.KLDivergence(),
         metrics=['accuracy']
     )
 
