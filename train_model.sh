@@ -14,7 +14,7 @@ LEARNING_RATE=0.1
 
 # INPUTS
 DATASET_PATH="/data2/audioset-speech/tfrecords"
-MODEL_NAME="mnetv3_small_${EMBEDDING_SIZE}_v0"
+MODEL_NAME="mnetv3_small_${EMBEDDING_SIZE}_v1"
 
 # OUTPUTS
 LOGDIR="/data2/audioset-speech/tensorboard/"

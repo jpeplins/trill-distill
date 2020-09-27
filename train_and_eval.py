@@ -24,7 +24,7 @@ flags.DEFINE_float('learning_rate', 0.05, 'You know what this does.')
 flags.DEFINE_integer('num_epochs', 50, 'You know what this does.')
 flags.DEFINE_integer('batch_size', 64, 'You know what this does.')
 flags.DEFINE_integer('embedding_size', 2048, 'Size of embedding to distill.')
-flags.DEFINE_float('dropout', 0.0, 'Dropout.')
+flags.DEFINE_float('dropout', 0.1, 'Dropout.')
 
 
 def main(_):
