@@ -10,10 +10,14 @@ from tensorflow.keras import layers
 import tensorflow as tf
 
 
-def mobile_net_v3(input_shape, alpha=1.0, num_classes=2048, dropout=0.1):
+def mobile_net_v3(input_shape, alpha=1.0, num_classes=2048, dropout=0.1, rescaling=False):
 
     model_in = layers.Input(shape=input_shape, name="log_mel_spectrogram")
-    x = layers.experimental.preprocessing.Rescaling(1./255.)(model_in)
+    x = model_in
+
+    if rescaling:
+        x = layers.experimental.preprocessing.Rescaling(1./255.)(x)
+
     x = layers.Conv2D(16, kernel_size=3, strides=1, padding='same', use_bias=False, name='Conv')(x)
     x = layers.BatchNormalization(epsilon=1e-3, momentum=0.999, name='Conv/BatchNorm')(x)
     x = hard_swish(x)
