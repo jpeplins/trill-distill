@@ -30,4 +30,4 @@ python -m train_and_eval \
 -learning_rate "${LEARNING_RATE}" \
 -num_epochs "${NUM_EPOCHS}" \
 -batch_size "${BATCH_SIZE}" \
--embedding_size "${BATCH_SIZE}"
+-embedding_size "${EMBEDDING_SIZE}"
