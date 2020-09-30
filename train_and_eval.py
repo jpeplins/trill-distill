@@ -65,9 +65,9 @@ def main(_):
     board = tf.keras.callbacks.TensorBoard(
         log_dir=os.path.join(FLAGS.log_path, datetime.now().strftime("%Y%m%d-%H%M%S")),
         histogram_freq=0,
-        write_graph=True,
+        write_graph=False,
         write_images=False,
-        update_freq="epoch",
+        update_freq=1000,
         profile_batch=2,
     )
 
