@@ -1,8 +1,8 @@
 import tensorflow as tf
 
 # Such that each 0.96 audio context produces a 96x64 log mel spec.
-WIN_SIZE_SEC = 0.1
-WIN_STEP_SEC = 0.009
+WIN_SIZE_SEC = 0.025
+WIN_STEP_SEC = 0.01
 NUM_MEL_BINS = 64
 MEL_LB_HZ = 80.0
 MEL_UB_HZ = 7600.0
@@ -21,6 +21,7 @@ def mel_spectrogram(x, fs):
         frame_length=int(fs * WIN_SIZE_SEC),
         frame_step=int(fs * WIN_STEP_SEC),
         fft_length=int(fs * WIN_SIZE_SEC),
+        pad_end=True
     ))
 
     mel_weight_matrix = tf.cast(tf.signal.linear_to_mel_weight_matrix(
