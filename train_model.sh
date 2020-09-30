@@ -7,7 +7,7 @@ set -x
 #########################################
 
 # PARAMS
-MODEL_VERSION=2
+MODEL_VERSION=3
 BATCH_SIZE=128
 NUM_EPOCHS=50
 EMBEDDING_SIZE=2048

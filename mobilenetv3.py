@@ -37,17 +37,15 @@ def mobile_net_v3(input_shape, alpha=1.0, num_classes=2048, pre_output_length=10
     x = _inverted_res_block(x,  6,           _depth(96 * alpha), 5,  1,  0.25, hard_swish, 10)
     # END LINEAR BOTTLENECKS
 
-    x = layers.Conv2D(576, kernel_size=1, padding='same', use_bias=False, name='Conv_1')(x)
+    x = layers.Conv2D(576, kernel_size=1, padding='same', use_bias=True, name='Conv_1')(x)
     x = layers.BatchNormalization(epsilon=1e-3, momentum=0.999, name='Conv_1/BatchNorm')(x)
     x = hard_swish(x)
-    x = layers.Conv2D(pre_output_length, kernel_size=1, padding='same', use_bias=True, name='Conv_2')(x)
-    x = hard_swish(x)
     x = layers.GlobalAveragePooling2D()(x)
-    x = layers.Dropout(dropout)(x)
-    x = layers.Reshape((1, 1, pre_output_length))(x)
-    x = layers.Conv2D(num_classes, kernel_size=1, padding='same')(x)
     x = layers.Flatten()(x)
-    x = layers.Activation(activation=tf.nn.swish, name='Predictions')(x)
+    x = layers.Dropout(dropout)(x)
+    x = layers.Dense(pre_output_length, activation=tf.nn.swish)(x)
+    x = layers.Dropout(dropout)(x)
+    x = layers.Dense(num_classes, activation=tf.nn.swish, name="embedding")(x)
 
     return models.Model(model_in, x, name='MobilenetV3')
 
