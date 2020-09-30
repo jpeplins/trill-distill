@@ -31,10 +31,11 @@ def _float_feature(list_of_floats):  # float32
     return tf.train.Feature(float_list=tf.train.FloatList(value=list_of_floats))
 
 
-def to_tfrecord(spectrogram, trill_feature):
+def to_tfrecord(spectrogram, trill_feature, embedding):
     feature = {
         'audio': _float_feature(spectrogram),
         'label': _float_feature(trill_feature),
+        'embed': _float_feature(embedding)
     }
     return tf.train.Example(features=tf.train.Features(feature=feature))
 
@@ -82,10 +83,16 @@ def main(unused_argv):
                     # spectrogram input
                     lms = log_mel_spec(x_samp, SAMPLING_RATE).numpy()
                     # trill target
-                    target = module(samples=x_samp, sample_rate=SAMPLING_RATE)['layer19'].numpy()
+                    target = module(samples=x_samp, sample_rate=SAMPLING_RATE)
+                    layer19 = target['layer19'].numpy()
+                    embedding = target['embedding'].numpy()
 
                     # Write serialized example to TFRecord file
-                    example = to_tfrecord(lms.flatten().tolist(), target.flatten().tolist())
+                    example = to_tfrecord(
+                        lms.flatten().tolist(),
+                        layer19.flatten().tolist(),
+                        embedding.flatten().tolist()
+                    )
                     out.write(example.SerializeToString())
 
                 except Exception as e:
