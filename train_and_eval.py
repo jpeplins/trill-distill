@@ -81,12 +81,11 @@ def main(_):
 
     tf.keras.models.save_model(
         embedding_model,
-        os.path.join(FLAGS.output_path, FLAGS.model_name)
+        FLAGS.output_path
     )
 
-    converter = tf.lite.TFLiteConverter.from_saved_model(
-        os.path.join(FLAGS.output_path, FLAGS.model_name))
-    with open(os.path.join(FLAGS.output_path, FLAGS.model_name, '%s.tflite' % FLAGS.model_name), 'wb') as f:
+    converter = tf.lite.TFLiteConverter.from_saved_model(FLAGS.output_path)
+    with open(os.path.join(FLAGS.output_path, '%s.tflite' % FLAGS.model_name), 'wb') as f:
         f.write(converter.convert())
 
 
