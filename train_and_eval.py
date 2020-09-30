@@ -20,10 +20,11 @@ flags.DEFINE_string('dataset_path', None, 'Path to collection of TFRecords.')
 flags.DEFINE_string('output_path', None, 'Path to save distilled embedding models.')
 flags.DEFINE_string('checkpoint_path', None, 'Path to save training checkpoints.')
 flags.DEFINE_string('log_path', None, 'Path to store logs for tensorboard')
-flags.DEFINE_float('learning_rate', 0.05, 'You know what this does.')
+flags.DEFINE_float('learning_rate', 0.1, 'You know what this does.')
 flags.DEFINE_integer('num_epochs', 50, 'You know what this does.')
-flags.DEFINE_integer('batch_size', 64, 'You know what this does.')
+flags.DEFINE_integer('batch_size', 128, 'You know what this does.')
 flags.DEFINE_integer('embedding_size', 2048, 'Size of embedding to distill.')
+flags.DEFINE_integer('pre_output_size', 4096, 'Size of FC layer right before embedding layer.')
 flags.DEFINE_float('dropout', 0.1, 'Dropout.')
 
 
@@ -38,6 +39,7 @@ def main(_):
 
     embedding_model, distillation_model = distilled_model(
         embedding_size=FLAGS.embedding_size,
+        pre_output_size=FLAGS.pre_output_size,
         dropout=FLAGS.dropout
     )
 
@@ -56,7 +58,7 @@ def main(_):
 
     early_stopping = tf.keras.callbacks.EarlyStopping(
         monitor='val_loss',
-        patience=10,
+        patience=5,
         mode='auto',
     )
 

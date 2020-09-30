@@ -10,7 +10,7 @@ from tensorflow.keras import layers
 import tensorflow as tf
 
 
-def mobile_net_v3(input_shape, alpha=1.0, num_classes=2048, dropout=0.1, rescaling=False):
+def mobile_net_v3(input_shape, alpha=1.0, num_classes=2048, pre_output_length=1024, dropout=0.1, rescaling=True):
 
     model_in = layers.Input(shape=input_shape, name="log_mel_spectrogram")
     x = model_in
@@ -40,11 +40,11 @@ def mobile_net_v3(input_shape, alpha=1.0, num_classes=2048, dropout=0.1, rescali
     x = layers.Conv2D(576, kernel_size=1, padding='same', use_bias=False, name='Conv_1')(x)
     x = layers.BatchNormalization(epsilon=1e-3, momentum=0.999, name='Conv_1/BatchNorm')(x)
     x = hard_swish(x)
-    x = layers.Conv2D(1024, kernel_size=1, padding='same', use_bias=True, name='Conv_2')(x)
+    x = layers.Conv2D(pre_output_length, kernel_size=1, padding='same', use_bias=True, name='Conv_2')(x)
     x = hard_swish(x)
     x = layers.GlobalAveragePooling2D()(x)
     x = layers.Dropout(dropout)(x)
-    x = layers.Reshape((1, 1, 1024))(x)
+    x = layers.Reshape((1, 1, pre_output_length))(x)
     x = layers.Conv2D(num_classes, kernel_size=1, padding='same')(x)
     x = layers.Flatten()(x)
     x = layers.Activation(activation=tf.nn.swish, name='Predictions')(x)

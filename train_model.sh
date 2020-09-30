@@ -7,14 +7,15 @@ set -x
 #########################################
 
 # PARAMS
-BATCH_SIZE=64
-NUM_EPOCHS=100
+BATCH_SIZE=128
+NUM_EPOCHS=50
 EMBEDDING_SIZE=2048
+PRE_OUTPUT_SIZE=4096
 LEARNING_RATE=0.1
 
 # INPUTS
 DATASET_PATH="/data2/audioset-speech/tfrecords"
-MODEL_NAME="mnetv3_small_${EMBEDDING_SIZE}_v1"
+MODEL_NAME="mnetv3_small_${EMBEDDING_SIZE}_v2"
 
 # OUTPUTS
 LOGDIR="/data2/audioset-speech/tensorboard/"
@@ -30,4 +31,5 @@ python -m train_and_eval \
 -learning_rate "${LEARNING_RATE}" \
 -num_epochs "${NUM_EPOCHS}" \
 -batch_size "${BATCH_SIZE}" \
--embedding_size "${EMBEDDING_SIZE}"
+-embedding_size "${EMBEDDING_SIZE}" \
+-pre_output_size "${PRE_OUTPUT_SIZE}"
