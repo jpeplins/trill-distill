@@ -67,7 +67,7 @@ def main(_):
         histogram_freq=0,
         write_graph=False,
         write_images=False,
-        update_freq=1000,
+        update_freq='epoch',
         profile_batch=2,
     )
 
