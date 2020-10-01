@@ -7,16 +7,16 @@ set -x
 #########################################
 
 # PARAMS
-MODEL_VERSION=4
+MODEL_VERSION=0
 BATCH_SIZE=128
 NUM_EPOCHS=80
 EMBEDDING_SIZE=2048
-PRE_OUTPUT_SIZE=12288
+PRE_OUTPUT_SIZE=4096
 LEARNING_RATE=0.1
 
 # INPUTS
 DATASET_PATH="/data2/audioset-speech/tfrecords"
-MODEL_NAME="mnetv3_small_${EMBEDDING_SIZE}_v${MODEL_VERSION}"
+MODEL_NAME="mnetv2_${EMBEDDING_SIZE}_v${MODEL_VERSION}"
 
 # OUTPUTS
 LOGDIR="/data2/audioset-speech/tensorboard/${MODEL_NAME}"
