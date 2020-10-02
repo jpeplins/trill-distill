@@ -14,8 +14,7 @@ try:
 except:
     pass
 
-# NUM_RECORDS = 812288
-NUM_RECORDS = 85
+NUM_RECORDS = 812288
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string('model_name', None, 'Give your model a name.')
@@ -48,7 +47,7 @@ def main(_):
 
     # reduce learning rate at epochs 8 and 16.
     schedule = keras.optimizers.schedules.PiecewiseConstantDecay(
-        [int(epoch*NUM_RECORDS/FLAGS.batch_size) for epoch in (12, 24)],
+        [int(epoch*NUM_RECORDS/FLAGS.batch_size) for epoch in (10, 20)],
         [0.005, 0.001, 0.0005],
     )
 
