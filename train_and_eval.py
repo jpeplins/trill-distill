@@ -45,10 +45,11 @@ def main(_):
         dropout=FLAGS.dropout
     )
 
-    # reduce learning rate at epochs 8 and 16.
-    schedule = keras.optimizers.schedules.PiecewiseConstantDecay(
-        [int(epoch*NUM_RECORDS/FLAGS.batch_size) for epoch in (10, 20)],
-        [0.005, 0.001, 0.0005],
+    schedule = keras.optimizers.schedules.ExponentialDecay(
+        FLAGS.learning_rate,
+        6346,
+        0.95,
+        staircase=True
     )
 
     distillation_model.compile(
