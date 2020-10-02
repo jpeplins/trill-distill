@@ -14,13 +14,16 @@ try:
 except:
     pass
 
+# NUM_RECORDS = 812288
+NUM_RECORDS = 85
+
 FLAGS = flags.FLAGS
 flags.DEFINE_string('model_name', None, 'Give your model a name.')
 flags.DEFINE_string('dataset_path', None, 'Path to collection of TFRecords.')
 flags.DEFINE_string('output_path', None, 'Path to save distilled embedding models.')
 flags.DEFINE_string('checkpoint_path', None, 'Path to save training checkpoints.')
 flags.DEFINE_string('log_path', None, 'Path to store logs for tensorboard')
-flags.DEFINE_float('learning_rate', 0.1, 'You know what this does.')
+flags.DEFINE_float('learning_rate', 0.01, 'You know what this does.')
 flags.DEFINE_integer('num_epochs', 50, 'You know what this does.')
 flags.DEFINE_integer('batch_size', 128, 'You know what this does.')
 flags.DEFINE_integer('embedding_size', 2048, 'Size of embedding to distill.')
@@ -43,8 +46,14 @@ def main(_):
         dropout=FLAGS.dropout
     )
 
+    # reduce learning rate at epochs 8 and 16.
+    schedule = keras.optimizers.schedules.PiecewiseConstantDecay(
+        [int(epoch*NUM_RECORDS/FLAGS.batch_size) for epoch in (12, 24)],
+        [0.005, 0.001, 0.0005],
+    )
+
     distillation_model.compile(
-        optimizer=keras.optimizers.Adam(learning_rate=FLAGS.learning_rate),
+        optimizer=keras.optimizers.Adam(learning_rate=schedule),
         loss=keras.losses.MeanSquaredError(),
         metrics=['accuracy']
     )
@@ -64,7 +73,7 @@ def main(_):
 
     board = tf.keras.callbacks.TensorBoard(
         log_dir=os.path.join(FLAGS.log_path, datetime.now().strftime("%Y%m%d-%H%M%S")),
-        histogram_freq=0,
+        histogram_freq=1,
         write_graph=False,
         write_images=False,
         update_freq='epoch',
