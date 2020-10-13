@@ -38,7 +38,7 @@ def main(_):
     assert FLAGS.num_epochs
     assert FLAGS.batch_size
     assert FLAGS.embedding_size
-    assert FLAGS.pre_embedding_size
+    assert FLAGS.pre_embedding_size >= 0
     assert FLAGS.learning_rate
 
     train_ds, test_ds = get_dataset(FLAGS.dataset_path, batch_size=FLAGS.batch_size)
