@@ -7,7 +7,7 @@ set -x
 #########################################
 
 # PARAMS
-LEARNING_RATE=0.001
+LEARNING_RATE=0.0001
 BATCH_SIZE=128
 NUM_EPOCHS=100
 

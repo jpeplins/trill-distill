@@ -13,8 +13,6 @@ try:
 except:
     pass
 
-NUM_RECORDS = 812288
-
 FLAGS = flags.FLAGS
 flags.DEFINE_string('model_name', None, 'Give your model a name.')
 flags.DEFINE_string('dataset_path', None, 'Path to collection of TFRecords.')
@@ -26,7 +24,7 @@ flags.DEFINE_integer('num_epochs', None, 'You know what this does.')
 flags.DEFINE_integer('batch_size', None, 'You know what this does.')
 flags.DEFINE_integer('embedding_size', None, 'Size of embedding to distill.')
 flags.DEFINE_integer('pre_embedding_size', None, 'Size of FC layer right before embedding layer.')
-flags.DEFINE_float('dropout', 0.0, 'Dropout.')
+flags.DEFINE_float('dropout', 0.05, 'Dropout.')
 flags.DEFINE_float('alpha', 1.0, 'Alpha for mobile net')
 flags.DEFINE_bool('gap', True, 'GlobalAveragePool mobile net output')
 
@@ -77,7 +75,7 @@ def main(_):
 
     early_stopping = tf.keras.callbacks.EarlyStopping(
         monitor='val_loss',
-        patience=10,
+        patience=6,
         mode='auto',
     )
 
