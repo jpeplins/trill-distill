@@ -42,7 +42,7 @@ function train_student() {
     -model_name "${model_id}" \
     -dataset_path "${DATASET_PATH}" \
     -output_path "${OUTPUT_PATH}/${model_id}" \
-    -checkpoint_path "${CHECKPOINT_PATH}/${model_id}" \
+    -checkpoint_path "${CHECKPOINT_PATH}/${model_id}/${model_id}" \
     -log_path "${LOGDIR}/${model_id}" \
     -learning_rate "${LEARNING_RATE}" \
     -num_epochs "${NUM_EPOCHS}" \
