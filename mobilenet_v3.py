@@ -529,10 +529,3 @@ def preprocess_input(x, data_format=None):  # pylint: disable=unused-argument
 @keras_export('keras.applications.mobilenet_v3.decode_predictions')
 def decode_predictions(preds, top=5):
   return imagenet_utils.decode_predictions(preds, top=top)
-
-
-preprocess_input.__doc__ = imagenet_utils.PREPROCESS_INPUT_DOC.format(
-  mode='',
-  ret=imagenet_utils.PREPROCESS_INPUT_RET_DOC_TF,
-  error=imagenet_utils.PREPROCESS_INPUT_ERROR_DOC)
-decode_predictions.__doc__ = imagenet_utils.decode_predictions.__doc__
