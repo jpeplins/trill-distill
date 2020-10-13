@@ -6,7 +6,7 @@ from __future__ import print_function
 from tensorflow.python.keras import backend
 from tensorflow.python.keras import models
 from tensorflow.python.keras.applications import imagenet_utils
-from tensorflow.python.keras.layers import VersionAwareLayers
+from tensorflow.python.keras import layers
 from tensorflow.python.keras.utils import data_utils
 from tensorflow.python.keras.utils import layer_utils
 from tensorflow.python.lib.io import file_io
@@ -31,7 +31,6 @@ WEIGHTS_HASHES = {
                                        '20d4e357df3f7a6361f3a288857b1051'),
 }
 
-layers = VersionAwareLayers()
 
 BASE_DOCSTRING = """Instantiates the {name} architecture.
   Reference:
