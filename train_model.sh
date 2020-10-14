@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 set -x
+export CUDA_VISIBLE_DEVICES=1
+
 
 #########################################
 # A driver script for model distillation.
@@ -50,11 +52,11 @@ function train_student() {
     -embedding_size "${embedding_size}" \
     -pre_embedding_size "${pre_embedding_size}" \
     -alpha "${alpha}" \
-    -gap "${gap}"
+    -gap "${gap}" &
 }
 
-train_student "mnetv3small" 2048 4096 1.0 true
-train_student "mnetv3small" 2048 2048 1.0 true
+# train_student "mnetv3small" 2048 4096 1.0 true
+# train_student "mnetv3small" 2048 2048 1.0 true
 train_student "mnetv3small" 2048 1024 1.0 true
 train_student "mnetv3small" 2048 0 1.0 true
 
