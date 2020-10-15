@@ -75,7 +75,7 @@ def main(_):
 
     early_stopping = tf.keras.callbacks.EarlyStopping(
         monitor='val_loss',
-        patience=6,
+        patience=5,
         mode='auto',
     )
 
