@@ -21,7 +21,7 @@ def distilled_model(embedding_size=2048, pre_embedding_size=4096, alpha=1.0, dro
 
 def mnetv3_2048_arch(embedding_size=2048, pre_embedding_size=2048, alpha=1.0, dropout=0.0, gap=True):
     model_in = Input(shape=(64, 96, 1), name="log_mel_spec")
-    x = MobileNetV3Tiny(
+    x = MobileNetV3Small(
             input_shape=(64, 96, 1),
             alpha=alpha,
             minimalistic=False,

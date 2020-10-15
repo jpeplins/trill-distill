@@ -11,7 +11,7 @@ export CUDA_VISIBLE_DEVICES=1
 # PARAMS
 LEARNING_RATE=0.0001
 BATCH_SIZE=128
-NUM_EPOCHS=70
+NUM_EPOCHS=50
 
 # INPUTS
 DATASET_PATH="/data2/audioset-speech/tfrecords"
@@ -55,13 +55,9 @@ function train_student() {
     -gap "${gap}"
 }
 
-# train_student "mnetv3small" 2048 4096 1.0 true
-# train_student "mnetv3small" 2048 2048 1.0 true
-#train_student "mnetv3small" 2048 1024 1.0 true
-#train_student "mnetv3small" 2048 0 1.0 true
 
-train_student "mnetv3tiny" 0 0 1.0 true
-train_student "mnetv3tiny" 0 0 0.5 true
+train_student "mnetv3smallv2" 0 0 1.0 true
+train_student "mnetv3smallv2" 0 0 0.5 true
 
 
 
