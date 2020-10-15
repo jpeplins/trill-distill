@@ -11,7 +11,7 @@ export CUDA_VISIBLE_DEVICES=1
 # PARAMS
 LEARNING_RATE=0.0001
 BATCH_SIZE=128
-NUM_EPOCHS=100
+NUM_EPOCHS=70
 
 # INPUTS
 DATASET_PATH="/data2/audioset-speech/tfrecords"
@@ -52,38 +52,18 @@ function train_student() {
     -embedding_size "${embedding_size}" \
     -pre_embedding_size "${pre_embedding_size}" \
     -alpha "${alpha}" \
-    -gap "${gap}" &
+    -gap "${gap}"
 }
 
 # train_student "mnetv3small" 2048 4096 1.0 true
 # train_student "mnetv3small" 2048 2048 1.0 true
-train_student "mnetv3small" 2048 1024 1.0 true
-train_student "mnetv3small" 2048 0 1.0 true
+#train_student "mnetv3small" 2048 1024 1.0 true
+#train_student "mnetv3small" 2048 0 1.0 true
 
-#train_student "mnetv3small" 2048 4096 1.0 false
-#train_student "mnetv3small" 2048 2048 1.0 false
-#train_student "mnetv3small" 2048 1024 1.0 false
-#train_student "mnetv3small" 2048 0 1.0 false
+train_student "mnetv3tiny" 0 0 1.0 true
+train_student "mnetv3tiny" 0 0 0.5 true
 
-#train_student "mnetv3small" 2048 4096 0.75 true
-#train_student "mnetv3small" 2048 2048 0.75 true
-#train_student "mnetv3small" 2048 1024 0.75 true
-#train_student "mnetv3small" 2048 0 0.75 true
-#
-#train_student "mnetv3small" 2048 4096 0.75 false
-#train_student "mnetv3small" 2048 2048 0.75 false
-#train_student "mnetv3small" 2048 1024 0.75 false
-#train_student "mnetv3small" 2048 0 0.75 false
-#
-#train_student "mnetv3small" 2048 4096 0.5 true
-#train_student "mnetv3small" 2048 2048 0.5 true
-#train_student "mnetv3small" 2048 1024 0.5 true
-#train_student "mnetv3small" 2048 0 0.5 true
-#
-#train_student "mnetv3small" 2048 4096 0.5 false
-#train_student "mnetv3small" 2048 2048 0.5 false
-#train_student "mnetv3small" 2048 1024 0.5 false
-#train_student "mnetv3small" 2048 0 0.5 false
+
 
 
 
