@@ -37,7 +37,7 @@ def main(_):
     assert FLAGS.learning_rate
     assert FLAGS.num_epochs
     assert FLAGS.batch_size
-    assert FLAGS.embedding_size
+    assert FLAGS.embedding_size >= 0
     assert FLAGS.pre_embedding_size >= 0
     assert FLAGS.learning_rate
 
