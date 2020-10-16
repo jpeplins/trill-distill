@@ -6,12 +6,11 @@ import tensorflow as tf
 
 def distilled_model(embedding_size=2048, pre_embedding_size=4096, alpha=1.0, dropout=0.1, gap=True):
     """ Wrapper model that contains large fully connected layer for distilling to layer19. """
-    embedding_model = mnetv3_2048_arch(
-        embedding_size=embedding_size,
-        pre_embedding_size=pre_embedding_size,
-        alpha=alpha,
-        dropout=dropout,
-        gap=gap)
+    embedding_model = tf.keras.Sequential([
+        Input(shape=(64, 96, 1)),
+        Flatten(),
+        Dense(1, activation=tf.nn.swish)
+    ])
     distillation_model = tf.keras.Sequential([
         embedding_model,
         Dense(12288, activation=tf.nn.swish, kernel_regularizer=regularizers.l2(1e-9), name="layer19_hat")
