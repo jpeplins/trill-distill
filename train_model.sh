@@ -56,8 +56,10 @@ function train_student() {
 }
 
 
-train_student "mnetv3smallv2" 0 0 1.0 true
-train_student "mnetv3smallv2" 0 0 0.5 true
+train_student "mnetv3tinyv2" 0 0 1.0 true
+train_student "mnetv3tinyv2" 0 0 0.5 true
+train_student "mnetv3tinyv2" 0 0 0.25 true
+
 
 
 
