@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 set -x
+export CUDA_VISIBLE_DEVICES=1
 
 SOURCE_DIR="/data2/audioset-speech/files"
 DEST_DIR="/data2/audioset-speech/tfrecords/v1"
