@@ -1,5 +1,5 @@
 from absl import flags, logging, app
-from frontend import log_mel_spec
+from frontend import log_mel_spectrogram
 from scipy.io import wavfile
 import tensorflow_hub as hub
 import tensorflow as tf
@@ -81,7 +81,7 @@ def main(unused_argv):
                     x_samp = x[start_idx:start_idx+CONTEXT_SIZE_SAMPLES]
 
                     # spectrogram input
-                    lms = log_mel_spec(x_samp, SAMPLING_RATE).numpy()
+                    lms = log_mel_spectrogram(x_samp, SAMPLING_RATE).numpy()
                     # trill target
                     target = module(samples=x_samp, sample_rate=SAMPLING_RATE)
                     layer19 = target['layer19'].numpy()
