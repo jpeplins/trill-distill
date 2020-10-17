@@ -82,6 +82,7 @@ def main(unused_argv):
 
                     # spectrogram input
                     lms = log_mel_spectrogram(x_samp, SAMPLING_RATE).numpy()
+                    assert lms.shape == (96, 64)
                     # trill target
                     target = module(samples=x_samp, sample_rate=SAMPLING_RATE)
                     layer19 = target['layer19'].numpy()

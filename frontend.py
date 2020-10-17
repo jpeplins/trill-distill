@@ -33,6 +33,7 @@ def log_mel_spectrogram(data,
           frame_step=hop_length_samples,
           fft_length=fft_length,
           window_fn=tf.signal.hann_window,
+          pad_end=True,
       )
   )
 
