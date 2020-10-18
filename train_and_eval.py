@@ -41,7 +41,7 @@ def main(_):
     assert FLAGS.pre_embedding_size >= 0
     assert FLAGS.learning_rate
 
-    train_ds = get_dataset(FLAGS.dataset_path, batch_size=FLAGS.batch_size)
+    train_ds, test_ds = get_dataset(FLAGS.dataset_path, batch_size=FLAGS.batch_size)
 
     embedding_model, distillation_model = distilled_model(
         model_name=FLAGS.model_name,
@@ -74,6 +74,12 @@ def main(_):
         save_best_only=False
     )
 
+    early_stopping = tf.keras.callbacks.EarlyStopping(
+        monitor='val_loss',
+        patience=5,
+        mode='auto',
+    )
+
     board = tf.keras.callbacks.TensorBoard(
         log_dir=FLAGS.log_path,
         histogram_freq=1,
@@ -85,9 +91,10 @@ def main(_):
 
     distillation_model.fit(
         x=train_ds,
+        validation_data=test_ds,
         epochs=FLAGS.num_epochs,
         batch_size=FLAGS.batch_size,
-        callbacks=[model_checkpoint_callback, board]
+        callbacks=[model_checkpoint_callback, early_stopping, board]
     )
 
     tf.keras.models.save_model(

@@ -42,11 +42,17 @@ def get_dataset(data_dir, batch_size=32, train_percent=0.9):
     # Parse a batch into a dataset of [audio, label] pairs
     ds = ds.map(lambda x: _parse_batch(x))
 
-    # Shuffle batches each epoch.
-    ds = ds.shuffle(int(1e3), reshuffle_each_iteration=True)
-    ds = ds.batch(batch_size)
+    # train/test split
+    test_size = int(NUM_EXAMPLES * (1 - train_percent))
+    ds_test = ds.take(test_size)
+    ds_train = ds.skip(test_size)
 
-    return ds.prefetch(buffer_size=AUTOTUNE)
+    # Shuffle batches each epoch.
+    ds_train = ds_train.shuffle(int(1e3), reshuffle_each_iteration=True)
+    ds_train = ds_train.batch(batch_size)
+    ds_test = ds_test.batch(batch_size)
+
+    return ds_train.prefetch(buffer_size=AUTOTUNE), ds_test.prefetch(buffer_size=AUTOTUNE)
 
 
 if __name__ == '__main__':
