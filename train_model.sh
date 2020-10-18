@@ -14,7 +14,7 @@ BATCH_SIZE=128
 NUM_EPOCHS=50
 
 # INPUTS
-DATASET_PATH="/data2/audioset-speech/tfrecords"
+DATASET_PATH="/data2/audioset-speech/tfrecords/v1"
 
 # OUTPUTS
 LOGDIR="/data2/audioset-speech/tensorboard"
@@ -56,12 +56,8 @@ function train_student() {
 }
 
 
-train_student "mnetv3tinyv2" 0 0 1.0 true
-train_student "mnetv3tinyv2" 0 0 0.5 true
-train_student "mnetv3tinyv2" 0 0 0.25 true
-
-
-
-
-
-
+train_student "mnetv3smallv3" 0 0 1.0 true
+train_student "mnetv3smallv3" 0 0 0.5 true
+train_student "mnetv3tinyv3" 0 0 1.0 true
+train_student "mnetv3tinyv3" 0 0 0.5 true
+train_student "mnetv3tinyv3" 0 0 0.25 true

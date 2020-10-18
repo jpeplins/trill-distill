@@ -44,6 +44,7 @@ def main(_):
     train_ds = get_dataset(FLAGS.dataset_path, batch_size=FLAGS.batch_size)
 
     embedding_model, distillation_model = distilled_model(
+        model_name=FLAGS.model_name,
         embedding_size=FLAGS.embedding_size,
         pre_embedding_size=FLAGS.pre_embedding_size,
         alpha=FLAGS.alpha,

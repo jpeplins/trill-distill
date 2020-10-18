@@ -4,14 +4,17 @@ from mobilenet_v3 import MobileNetV3Small, MobileNetV3Tiny
 import tensorflow as tf
 
 
-def distilled_model(embedding_size=2048, pre_embedding_size=4096, alpha=1.0, dropout=0.1, gap=True):
+def distilled_model(model_name='mnetv3tiny', embedding_size=2048, pre_embedding_size=4096, alpha=1.0, dropout=0.1, gap=True):
     """ Wrapper model that contains large fully connected layer for distilling to layer19. """
+
     embedding_model = mnetv3_2048_arch(
         embedding_size=embedding_size,
         pre_embedding_size=pre_embedding_size,
         alpha=alpha,
         dropout=dropout,
-        gap=gap)
+        gap=gap,
+        tiny=True if 'tiny' in model_name else False
+    )
     distillation_model = tf.keras.Sequential([
         embedding_model,
         Dense(12288, activation=tf.nn.swish, kernel_regularizer=regularizers.l2(1e-9), name="layer19_hat")
@@ -19,9 +22,10 @@ def distilled_model(embedding_size=2048, pre_embedding_size=4096, alpha=1.0, dro
     return embedding_model, distillation_model
 
 
-def mnetv3_2048_arch(embedding_size=2048, pre_embedding_size=2048, alpha=1.0, dropout=0.0, gap=True):
+def mnetv3_2048_arch(embedding_size=2048, pre_embedding_size=2048, alpha=1.0, dropout=0.0, gap=True, tiny=True):
     model_in = Input(shape=(64, 96, 1), name="log_mel_spec")
-    x = MobileNetV3Tiny(
+    model_func = MobileNetV3Tiny if tiny else MobileNetV3Small
+    x = model_func(
             input_shape=(64, 96, 1),
             alpha=alpha,
             minimalistic=False,
