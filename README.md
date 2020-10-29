@@ -6,4 +6,4 @@ found [here](https://github.com/google-research/google-research/tree/master/non_
 
 The original Trill model paper can be found [here](https://arxiv.org/pdf/2002.12764.pdf).
 
-Questions? Email Jacob at **jpeplins@uw.edu**.
+Questions? Email Jacob (**jpeplins@uw.edu**)
